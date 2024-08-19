@@ -23,7 +23,7 @@ function Dashboard() {
           <div className="mb-10">
             <div className="mb-5">
               <div className="flex items-center text-gray-500">
-                <h2 className="mb-2 me-1 text-xl tracking-tight font-bold  dark:text-white">
+                <h2 className="mb-2 me-1 text-xl tracking-tight font-bold">
                   Rapports
                 </h2>
 
@@ -35,8 +35,8 @@ function Dashboard() {
                     data-dropdown-trigger="hover"
                     className="fa-solid fa-filter"
                   ></i>{" "} */}
-                  {/* Dropdown menu */}
-                  {/* <div
+                {/* Dropdown menu */}
+                {/* <div
                     id="dropdownDelay"
                     className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
                   >
@@ -88,7 +88,6 @@ function Dashboard() {
                   </div> 
                 </div>*/}
               </div>
-              <hr />
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -96,11 +95,11 @@ function Dashboard() {
                 to="#"
                 className="block max-w-sm p-5 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 etst dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
               >
-                <h5 className="mb-2 text-base font-bold tracking-tight text-gray-500 dark:text-white">
-                  <i class="fa-solid fa-pen-to-square"></i> Enrôlé(s)
+                <h5 className="mb-2 text-base font-bold tracking-tight text-gray-500">
+                  <i className="fa-solid fa-user-plus text-lg"></i> Enrôlé(s)
                 </h5>
                 <hr />
-                <p className="font-bold text-2xl">2</p>
+                <p className="font-medium text-2xl text-gray-500">2</p>
               </Link>
 
               <Link
@@ -108,10 +107,10 @@ function Dashboard() {
                 className="block max-w-sm p-5 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 etst dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
               >
                 <h5 className="mb-2 text-base font-bold tracking-tight text-gray-500 dark:text-white">
-                  <i class="fa-solid fa-paper-plane"></i> Envoyé(s)
+                  <i class="fa-solid fa-paper-plane text-lg"></i> Envoyé(s)
                 </h5>
                 <hr />
-                <p className="font-bold text-2xl">2</p>
+                <p className="font-medium text-2xl text-gray-500">2</p>
               </Link>
 
               <Link
@@ -120,10 +119,10 @@ function Dashboard() {
                 className="block max-w-sm p-5 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
               >
                 <h5 className="mb-2 text-base font-bold tracking-tight text-gray-500 dark:text-white">
-                  <i class="fa-solid fa-hand-holding"></i> Récupéré(s)
+                  <i class="fa-solid fa-hand-holding text-lg"></i> Récupéré(s)
                 </h5>
                 <hr />
-                <p className="font-bold text-2xl">5</p>
+                <p className="font-medium text-2xl text-gray-500">5</p>
               </Link>
               <Link
                 Link
@@ -132,10 +131,10 @@ function Dashboard() {
               >
                 <h5 className="mb-2 text-base font-bold tracking-tight text-gray-500 dark:text-white">
                   {" "}
-                  <i class="fa-solid fa-ban"></i> Non récupéré(s){" "}
+                  <i class="fa-solid fa-ban text-lg"></i> Non récupéré(s){" "}
                 </h5>
                 <hr />
-                <p className="font-bold text-2xl">2</p>
+                <p className="font-medium text-2xl text-gray-500">2</p>
               </Link>
             </div>
           </div>
@@ -143,15 +142,14 @@ function Dashboard() {
           <div className="mb-10">
             <div className="mb-5">
               <div className="flex items-center text-gray-500">
-                <h2 className="mb-2 me-1 text-xl tracking-tight font-bold  dark:text-white">
+                <h2 className="mb-2 me-1 text-xl tracking-tight font-bold">
                   Rapports 2
                 </h2>
               </div>
-              <hr />
             </div>
 
-            <div className="flex flex-wrap items-center justify-between w-full">
-              <div className="m-1 w-full rounded-lg border-2 border-gray-200 border-solid p-2">
+           {/* <div className="flex flex-wrap items-center w-full">
+               <div className="m-1 w-5/12 rounded-lg border-2 border-gray-200 border-solid p-2">
                 <Bar
                   data={{
                     labels: sourceData.map((data) => data.label),
@@ -171,45 +169,15 @@ function Dashboard() {
                   options={{
                     plugins: {
                       title: {
-                        text: "revenue sources"
+                        text: "revenue sources",
+                      
                       }
                     }
                   }}
                 />
               </div>
-
-              <div className="m-1 w-6/12 rounded-lg border-2 border-gray-200 border-solid p-2">
-                <Doughnut
-                  data={{
-                    labels: sourceData.map((data) => data.label),
-                    datasets: [
-                      {
-                        label: "Count",
-                        data: sourceData.map((data) => data.value),
-                        backgroundColor: [
-                          "rgba(43, 63, 229, 0.8)",
-                          "rgba(0, 0, 0, 0.1)",
-                          "rgba(253, 135, 135, 0.8)"
-                        ],
-                        borderColor: [
-                          "rgba(43, 63, 229, 0.8)",
-                          "rgba(0, 0, 0, 0.1)",
-                          "rgba(253, 135, 135, 0.8)"
-                        ]
-                      }
-                    ]
-                  }}
-                  options={{
-                    plugins: {
-                      title: {
-                        text: "Pays enrôlés"
-                      }
-                    }
-                  }}
-                />
-              </div>
-
-              <div className="m-1 w-6/12 rounded-lg border-2 border-gray-200 border-solid p-2">
+              
+              <div className="m-1 w-5/12 rounded-lg border-2 border-gray-200 border-solid p-2">
                 <Line
                   data={{
                     labels: revenueData.map((data) => data.label),
@@ -238,7 +206,38 @@ function Dashboard() {
                   }}
                 />
               </div>
-            </div>
+             
+              <div className="m-1 w-5/12 rounded-lg border-2 border-gray-200 border-solid p-2">
+                <Doughnut
+                  data={{
+                    labels: sourceData.map((data) => data.label),
+                    datasets: [
+                      {
+                        label: "Count",
+                        data: sourceData.map((data) => data.value),
+                        backgroundColor: [
+                          "rgba(43, 63, 229, 0.8)",
+                          "rgba(0, 0, 0, 0.1)",
+                          "rgba(253, 135, 135, 0.8)"
+                        ],
+                        borderColor: [
+                          "rgba(43, 63, 229, 0.8)",
+                          "rgba(0, 0, 0, 0.1)",
+                          "rgba(253, 135, 135, 0.8)"
+                        ]
+                      }
+                    ]
+                  }}
+                  options={{
+                    plugins: {
+                      title: {
+                        text: "Pays enrôlés"
+                      }
+                    }
+                  }}
+                />
+              </div> 
+            </div>*/}
           </div>
         </div>
       </div>

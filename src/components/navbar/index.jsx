@@ -1,11 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Logo from "../../img/congo.png";
+import Pp from "../../img/pp.jpg";
 
 function Navbar() {
+  const location = useLocation();
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [settingDropdownOpen, setSettingDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    // Vérifier si l'URL actuelle correspond à l'un des éléments du dropdown Utilisateurs
+    setUserDropdownOpen(
+      location.pathname.startsWith("/admin/user") ||
+        location.pathname.startsWith("/admin/enrolement")
+    );
+
+    // Vérifier si l'URL actuelle correspond à l'un des éléments du dropdown Paramètres
+    setSettingDropdownOpen(location.pathname.startsWith("/admin/profil"));
+  }, [location]);
+
+  const toggleUserDropdown = () => setUserDropdownOpen(!userDropdownOpen);
+  const toggleSettingDropdown = () =>
+    setSettingDropdownOpen(!settingDropdownOpen);
+
   return (
     <div>
       {/* navbar*/}
-      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+      <nav className="fixed top-0 z-50 w-full bg-red-600 shadow-lg">
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start rtl:justify-end">
@@ -31,10 +52,10 @@ function Navbar() {
                   ></path>
                 </svg>
               </button>
-              <Link to="#"
-                className="flex ms-2 md:me-24 items-center"
-              >
-                <h1 className="lien-titre-logo">GestPass</h1>
+              <Link to="#" className="flex ms-2 md:me-24 items-center">
+                <h1 className="lien-titre-logo font-medium text-white text-2xl">
+                  GestPass
+                </h1>
               </Link>
             </div>
             <div className="flex items-center">
@@ -42,14 +63,14 @@ function Navbar() {
                 <div>
                   <button
                     type="button"
-                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                    className="flex text-sm bg-gray-800 rounded-full cursor-default"
                     aria-expanded="false"
                   >
                     <span className="sr-only">Open user menu</span>
 
                     <img
                       className="w-8 h-8 rounded-full"
-                      src="#"
+                      src={Pp}
                       alt="utilisateur photo"
                     />
                   </button>
@@ -66,15 +87,31 @@ function Navbar() {
         className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <div className="w-6/12 mx-auto">
+          <img
+            src={Logo}
+            alt="Emblème du Congo"
+            className="w-full object-cover object-center"
+          />
+        </div>
+        <hr />
+        <div className="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
               <Link
                 to="/"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className={`flex items-center p-2 rounded-lg group ${
+                  location.pathname === "/"
+                    ? "bg-red-700 text-white"
+                    : "text-gray-900 hover:bg-gray-100 dark:text-white"
+                }`}
               >
                 <svg
-                  className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  className={`w-5 h-5 transition duration-75 ${
+                    location.pathname === "/"
+                      ? "text-white"
+                      : "text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  }`}
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -90,8 +127,7 @@ function Navbar() {
               <button
                 type="button"
                 className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                aria-controls="dropdown-user"
-                data-collapse-toggle="dropdown-user"
+                onClick={toggleUserDropdown}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -104,17 +140,24 @@ function Navbar() {
                 </svg>
                 <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                   Utlisateurs{" "}
-                  <i className="fa-solid fa-angle-down flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                  <i
+                    className={`fa-solid fa-angle-${
+                      userDropdownOpen ? "up" : "down"
+                    } flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}
+                  ></i>
                 </span>
               </button>
               <ul
-                id="dropdown-user"
-                className="{{request()->routeIs('admin.profils.index') ? '' : 'hidden'}} py-2 space-y-2"
+                className={`${userDropdownOpen ? "" : "hidden"} py-2 space-y-2`}
               >
                 <li>
                   <Link
                     to="/admin/user"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    className={`flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group ${
+                      location.pathname === "/admin/user"
+                        ? "bg-red-700 text-white"
+                        : "text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    }`}
                   >
                     Administrateurs
                   </Link>
@@ -122,9 +165,13 @@ function Navbar() {
                 <li>
                   <Link
                     to="/admin/enrolement"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    className={`flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group ${
+                      location.pathname === "/admin/enrolement"
+                        ? "bg-red-700 text-white"
+                        : "text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    }`}
                   >
-                    enrôlement
+                    Enrôlement
                   </Link>
                 </li>
               </ul>
@@ -133,8 +180,7 @@ function Navbar() {
               <button
                 type="button"
                 className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                aria-controls="dropdown-setting"
-                data-collapse-toggle="dropdown-setting"
+                onClick={toggleSettingDropdown}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 "
@@ -145,17 +191,26 @@ function Navbar() {
                 </svg>
                 <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                   Paramètres{" "}
-                  <i className="fa-solid fa-angle-down flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                  <i
+                    className={`fa-solid fa-angle-${
+                      settingDropdownOpen ? "up" : "down"
+                    } flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}
+                  ></i>
                 </span>
               </button>
               <ul
-                id="dropdown-setting"
-                className=" py-2 space-y-2"
+                className={`${
+                  settingDropdownOpen ? "" : "hidden"
+                } py-2 space-y-2`}
               >
                 <li>
                   <Link
                     to="/admin/profil"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    className={`flex items-center w-full p-2 transition duration-75 rounded-lg pl-11 group ${
+                      location.pathname === "/admin/profil"
+                        ? "bg-red-700 text-white"
+                        : "text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    }`}
                   >
                     Profile
                   </Link>
@@ -166,7 +221,7 @@ function Navbar() {
             {/* <!-- logout --> */}
             <li className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <Link
-                to="#"
+                to="/admin/login"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="fa-solid fa-right-from-bracket flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -178,7 +233,6 @@ function Navbar() {
           </ul>
         </div>
       </aside>
-
     </div>
   );
 }

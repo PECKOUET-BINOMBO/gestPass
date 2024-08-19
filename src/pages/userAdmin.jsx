@@ -21,7 +21,7 @@ function UserAdmin() {
               <div>
                 <button
                   type="button"
-                  className=" text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-blue-800"
+                  className=" text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                 >
                   Ajouter
                 </button>
@@ -106,22 +106,25 @@ function UserAdmin() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <tr className="bg-white border-b  hover:bg-gray-50 ">
                     <td className="px-6 py-4">16/08/2024</td>
                     <td className="px-6 py-4">DJOUD</td>
                     <td className="px-6 py-4">Leviss</td>
                     <td className="px-6 py-4">leviss@gmail.com</td>
                     <td className="px-6 py-4">Super Administrateur</td>
-                    <td className="px-6 py-4">
-                      <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline me-2">
-                        Modifier
+                    <td className="px-6 py-4 flex items-center">
+                      <button className="font-medium rounded text-white px-1  bg-green-600 dark:text-green-500 hover:underline ">
+                      <i className="fa-solid fa-eye"></i>
+                      </button>
+                      <button className="font-medium rounded text-white px-1  bg-blue-600 dark:text-blue-500 hover:underline mx-2">
+                      <i className="fa-solid fa-pen"></i>
                       </button>
                       <form className="inline-block" method="POST" action="">
                         <button
                           type="submit"
-                          className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                          className="font-medium rounded text-white px-1  bg-red-600 dark:text-red-500 hover:underline"
                         >
-                          Supprimer
+                          <i className="fa-solid fa-trash"></i>
                         </button>
                       </form>
                     </td>
