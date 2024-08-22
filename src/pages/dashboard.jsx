@@ -107,7 +107,7 @@ function Dashboard() {
                 className="block max-w-sm p-5 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 etst dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
               >
                 <h5 className="mb-2 text-base font-bold tracking-tight text-gray-500 dark:text-white">
-                  <i class="fa-solid fa-paper-plane text-lg"></i> Envoyé(s)
+                  <i className="fa-solid fa-paper-plane text-lg"></i> Envoyé(s)
                 </h5>
                 <hr />
                 <p className="font-medium text-2xl text-gray-500">2</p>
@@ -119,7 +119,7 @@ function Dashboard() {
                 className="block max-w-sm p-5 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
               >
                 <h5 className="mb-2 text-base font-bold tracking-tight text-gray-500 dark:text-white">
-                  <i class="fa-solid fa-hand-holding text-lg"></i> Récupéré(s)
+                  <i className="fa-solid fa-hand-holding text-lg"></i> Récupéré(s)
                 </h5>
                 <hr />
                 <p className="font-medium text-2xl text-gray-500">5</p>
@@ -131,7 +131,7 @@ function Dashboard() {
               >
                 <h5 className="mb-2 text-base font-bold tracking-tight text-gray-500 dark:text-white">
                   {" "}
-                  <i class="fa-solid fa-ban text-lg"></i> Non récupéré(s){" "}
+                  <i className="fa-solid fa-ban text-lg"></i> Non récupéré(s){" "}
                 </h5>
                 <hr />
                 <p className="font-medium text-2xl text-gray-500">2</p>

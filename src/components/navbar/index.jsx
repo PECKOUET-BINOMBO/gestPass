@@ -52,7 +52,7 @@ function Navbar() {
                   ></path>
                 </svg>
               </button>
-              <Link to="#" className="flex ms-2 md:me-24 items-center">
+              <Link to="/" className="flex ms-2 md:me-24 items-center">
                 <h1 className="lien-titre-logo font-medium text-white text-2xl">
                   GestPass
                 </h1>

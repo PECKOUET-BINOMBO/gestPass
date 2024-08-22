@@ -1,8 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/navbar";
 import Pagination from "../components/pagination/pagination";
+import AddAdminModal from "../components/modals/AddAdminModal";
+//import ViewAdminModal from "../components/modals/ViewAdminModal";
+import EditAdminModal from "../components/modals/EditAdminModal";
+import DeleteConfirmationModal from "../components/modals/DeleteConfirmationModal";
 
 function UserAdmin() {
+  //Ajout utilisateurs
+  const [admins, setAdmins] = useState([
+    {
+      id: 1,
+      dateAjout: "16/08/2024",
+      nom: "DJOUD",
+      prenom: "Leviss",
+      email: "leviss@gmail.com",
+      role: "Super Administrateur"
+    }
+    // Ajoutez d'autres administrateurs ici
+  ]);
+
+  // États pour contrôler l'affichage des modals
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  //const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
+
+  // Fonctions pour ouvrir les modals
+  const openAddModal = () => setIsAddModalOpen(true);
+  const openViewModal = (admin) => {
+    setSelectedAdmin(admin);
+    //setIsViewModalOpen(true);
+  };
+  
+  const openEditModal = (admin) => {
+    setSelectedAdmin(admin);
+    setIsEditModalOpen(true);
+  };
+  const openDeleteModal = (admin) => {
+    setSelectedAdmin(admin);
+    setIsDeleteModalOpen(true);
+  };
+
+  // Fonctions pour fermer les modals
+  const closeAddModal = () => setIsAddModalOpen(false);
+  //const closeViewModal = () => setIsViewModalOpen(false);
+  const closeEditModal = () => setIsEditModalOpen(false);
+  const closeDeleteModal = () => setIsDeleteModalOpen(false);
+
+  // Fonction pour gérer la sauvegarde des modifications
+  const handleSaveAdmin = (updatedAdmin) => {
+    setAdmins(
+      admins.map((admin) =>
+        admin.id === updatedAdmin.id ? updatedAdmin : admin
+      )
+    );
+    // Ici, vous ajouteriez la logique pour envoyer les modifications au serveur
+    console.log("Admin mis à jour:", updatedAdmin);
+  };
+
+  // Fonction pour gérer la suppression
+  const handleDeleteAdmin = (adminId) => {
+    setAdmins(admins.filter((admin) => admin.id !== adminId));
+    // Ici, vous ajouteriez la logique pour envoyer la suppression au serveur
+    console.log("Admin supprimé:", adminId);
+  };
+
   return (
     <div>
       <Navbar />
@@ -22,6 +86,7 @@ function UserAdmin() {
                 <button
                   type="button"
                   className=" text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                  onClick={openAddModal}
                 >
                   Ajouter
                 </button>
@@ -46,11 +111,7 @@ function UserAdmin() {
               </div>
             </div>
             <div>
-              <form
-                className="relative"
-                method="GET"
-                action="#"
-              >
+              <form className="relative" method="GET" action="#">
                 <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                   <svg
                     className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -106,35 +167,38 @@ function UserAdmin() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="bg-white border-b  hover:bg-gray-50 ">
-                    <td className="px-6 py-4">16/08/2024</td>
-                    <td className="px-6 py-4">DJOUD</td>
-                    <td className="px-6 py-4">Leviss</td>
-                    <td className="px-6 py-4">leviss@gmail.com</td>
-                    <td className="px-6 py-4">Super Administrateur</td>
-                    <td className="px-6 py-4 flex items-center">
-                      <button className="font-medium rounded text-white px-1  bg-green-600 dark:text-green-500 hover:underline ">
-                      <i className="fa-solid fa-eye"></i>
-                      </button>
-                      <button className="font-medium rounded text-white px-1  bg-blue-600 dark:text-blue-500 hover:underline mx-2">
-                      <i className="fa-solid fa-pen"></i>
-                      </button>
-                      <form className="inline-block" method="POST" action="">
+                  {admins.map((admin) => (
+                    <tr
+                      key={admin.id}
+                      className="bg-white border-b hover:bg-gray-50"
+                    >
+                      <td className="px-6 py-4">{admin.dateAjout}</td>
+                      <td className="px-6 py-4">{admin.nom}</td>
+                      <td className="px-6 py-4">{admin.prenom}</td>
+                      <td className="px-6 py-4">{admin.email}</td>
+                      <td className="px-6 py-4">{admin.role}</td>
+                      <td className="px-6 py-4 flex items-center">
+                        {/* <button
+                          className="font-medium rounded text-white px-1 bg-green-600 dark:text-green-500 hover:underline"
+                          onClick={() => openViewModal(admin)}
+                        >
+                          <i className="fa-solid fa-eye"></i>
+                        </button> */}
                         <button
-                          type="submit"
-                          className="font-medium rounded text-white px-1  bg-red-600 dark:text-red-500 hover:underline"
+                          className="font-medium rounded text-white px-1 bg-blue-600 dark:text-blue-500 hover:underline mx-2"
+                          onClick={() => openEditModal(admin)}
+                        >
+                          <i className="fa-solid fa-pen"></i>
+                        </button>
+                        <button
+                          className="font-medium rounded text-white px-1 bg-red-600 dark:text-red-500 hover:underline"
+                          onClick={() => openDeleteModal(admin)}
                         >
                           <i className="fa-solid fa-trash"></i>
                         </button>
-                      </form>
-                    </td>
-                  </tr>
-
-                  {/* <tr>
-                    <td colSpan="5" className="text-center py-4">
-                      Aucun utilisateur trouvé
-                    </td>
-                  </tr> */}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
               <div className="w-full">
@@ -144,6 +208,26 @@ function UserAdmin() {
           </div>
         </div>
       </div>
+
+      {/* Inclusion des modals */}
+      <AddAdminModal isOpen={isAddModalOpen} onClose={closeAddModal} />
+      {/* <ViewAdminModal
+        isOpen={isViewModalOpen}
+        onClose={closeViewModal}
+        admin={selectedAdmin}
+      /> */}
+      <EditAdminModal
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        admin={selectedAdmin}
+        onSave={handleSaveAdmin}
+      />
+      <DeleteConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={handleDeleteAdmin}
+        admin={selectedAdmin}
+      />
     </div>
   );
 }
