@@ -8,17 +8,98 @@ import DeleteConfirmationModal from "../components/modals/DeleteConfirmationModa
 
 function UserAdmin() {
   //Ajout utilisateurs
+  // TODO CORRIGER LES FITRES DE DATES
   const [admins, setAdmins] = useState([
     {
       id: 1,
-      dateAjout: "16/08/2024",
+      dateAjout: "2024/08/24",
       nom: "DJOUD",
       prenom: "Leviss",
       email: "leviss@gmail.com",
       role: "Super Administrateur"
+    },
+
+    {
+      id: 2,
+      dateAjout: "2024/08/23",
+      nom: "admin",
+      prenom: "Leviss",
+      email: "leviss@gmail.com",
+      role: "Administrateur"
+    },
+
+    {
+      id: 3,
+      dateAjout: "2024/08/22",
+      nom: "admin",
+      prenom: "Leviss",
+      email: "leviss@gmail.com",
+      role: "Administrateur"
+    },
+    {
+      id: 4,
+      dateAjout: "2024/08/22",
+      nom: "admin",
+      prenom: "Leviss",
+      email: "leviss@gmail.com",
+      role: "Administrateur"
+    },
+    {
+      id: 5,
+      dateAjout: "2024/08/21",
+      nom: "admin",
+      prenom: "Leviss",
+      email: "leviss@gmail.com",
+      role: "Administrateur"
+    },
+    {
+      id: 6,
+      dateAjout: "2024/08/20",
+      nom: "admin",
+      prenom: "Leviss",
+      email: "leviss@gmail.com",
+      role: "Administrateur"
     }
     // Ajoutez d'autres administrateurs ici
   ]);
+
+  const [filter, setFilter] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const filteredAdmins = admins
+    .filter((admin) => {
+      const matchesFilter =
+        filter === "" || filter === "Tous" || admin.role === filter;
+      const matchesSearch =
+        admin.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        admin.prenom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        admin.email.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesFilter && matchesSearch;
+    })
+    .sort((a, b) => {
+      if (filter === "Plus récents") {
+        return new Date(b.dateAjout) - new Date(a.dateAjout);
+      } else if (filter === "Moins récents") {
+        return new Date(a.dateAjout) - new Date(b.dateAjout);
+      }
+      return 0;
+    });
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredAdmins.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
 
   // États pour contrôler l'affichage des modals
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -33,7 +114,7 @@ function UserAdmin() {
     setSelectedAdmin(admin);
     //setIsViewModalOpen(true);
   };
-  
+
   const openEditModal = (admin) => {
     setSelectedAdmin(admin);
     setIsEditModalOpen(true);
@@ -94,12 +175,12 @@ function UserAdmin() {
               <div>
                 <form className="max-w-sm mx-auto">
                   <select
+                    onChange={handleFilterChange}
+                    value={filter}
                     id="countries"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
-                    <option selected disabled>
-                      Filter par
-                    </option>
+                    <option value="Tous">Tous</option>
                     <option value="Super Administrateur">
                       Super Administrateur
                     </option>
@@ -134,7 +215,8 @@ function UserAdmin() {
                   id="table-search-users"
                   className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Rechercher un administrateur"
-                  name="search"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
                 />
               </form>
             </div>
@@ -167,7 +249,7 @@ function UserAdmin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {admins.map((admin) => (
+                  {currentItems.map((admin) => (
                     <tr
                       key={admin.id}
                       className="bg-white border-b hover:bg-gray-50"
@@ -202,7 +284,12 @@ function UserAdmin() {
                 </tbody>
               </table>
               <div className="w-full">
-                <Pagination />
+                <Pagination
+                  itemsPerPage={itemsPerPage}
+                  totalItems={filteredAdmins.length}
+                  paginate={setCurrentPage}
+                  currentPage={currentPage}
+                />
               </div>
             </div>
           </div>
