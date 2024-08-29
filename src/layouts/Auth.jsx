@@ -7,6 +7,7 @@ function Auth() {
   return (
     <div className="h-full">
       <Routes>
+     
         <Route path="/admin/login" element={<Login />} />
         <Route path="/admin/lost" element={<Lost />} />
       </Routes>

@@ -8,7 +8,7 @@ import DeleteConfirmationModal from "../components/modals/DeleteConfirmationModa
 
 function UserAdmin() {
   //Ajout utilisateurs
-  // TODO CORRIGER LES FITRES DE DATES
+  
   const [admins, setAdmins] = useState([
     {
       id: 1,
@@ -78,14 +78,7 @@ function UserAdmin() {
         admin.email.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesFilter && matchesSearch;
     })
-    .sort((a, b) => {
-      if (filter === "Plus récents") {
-        return new Date(b.dateAjout) - new Date(a.dateAjout);
-      } else if (filter === "Moins récents") {
-        return new Date(a.dateAjout) - new Date(b.dateAjout);
-      }
-      return 0;
-    });
+   
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -185,8 +178,8 @@ function UserAdmin() {
                       Super Administrateur
                     </option>
                     <option value="Administrateur">Administrateur</option>
-                    <option value="Plus récents">Plus récents</option>
-                    <option value="Moins récents">Moins récents</option>
+                    {/* <option value="Plus récents">Plus récents</option>
+                    <option value="Moins récents">Moins récents</option> */}
                   </select>
                 </form>
               </div>
@@ -213,8 +206,8 @@ function UserAdmin() {
                 <input
                   type="search"
                   id="table-search-users"
-                  className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Rechercher un administrateur"
+                  className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="search"
+                  placeholder="noms, prénoms et e-mail"
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
@@ -237,7 +230,7 @@ function UserAdmin() {
                       Prénoms
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Emails
+                      E-mails
                     </th>
 
                     <th scope="col" className="px-6 py-3">
@@ -266,18 +259,14 @@ function UserAdmin() {
                         >
                           <i className="fa-solid fa-eye"></i>
                         </button> */}
-                        <button
-                          className="font-medium rounded text-white px-1 bg-blue-600 dark:text-blue-500 hover:underline mx-2"
-                          onClick={() => openEditModal(admin)}
-                        >
-                          <i className="fa-solid fa-pen"></i>
-                        </button>
-                        <button
-                          className="font-medium rounded text-white px-1 bg-red-600 dark:text-red-500 hover:underline"
+                         <span className="font-medium px-1 text-blue-600 cursor-pointer mx-2"
+                          onClick={() => openEditModal(admin)}>Modifier</span>
+                        <span
+                          className="font-medium px-1 text-red-600 cursor-pointer"
                           onClick={() => openDeleteModal(admin)}
                         >
-                          <i className="fa-solid fa-trash"></i>
-                        </button>
+                         Supprimer
+                        </span>
                       </td>
                     </tr>
                   ))}

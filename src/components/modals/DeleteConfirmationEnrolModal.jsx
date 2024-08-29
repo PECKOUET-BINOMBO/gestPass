@@ -7,14 +7,14 @@ function DeleteConfirmationEnrolModal({ isOpen, onClose, onConfirm, enrol }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded-lg w-96">
-        <h2 className="text-xl font-bold mb-4">Confirmer la suppression</h2>
+        <h2 className="text-xl font-bold mb-4 text-center">Confirmer la suppression</h2>
         <p className="mb-4">
           Êtes-vous sûr de vouloir supprimer l'enrôlé {enrol.prenom} {enrol.nom} ?
         </p>
         <p className="mb-4 text-sm text-gray-600">
           Cette action est irréversible et supprimera définitivement toutes les données associées à cet enrôlé.
         </p>
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center">
           <button
             onClick={onClose}
             className="mr-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
